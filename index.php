@@ -13,25 +13,23 @@ function calcWorkingDays(int $numYear, int $numMonth): void
 
     $mondayWork = false;
 
+    $isWorkDay = true;
+
     for ($i = 1; $i <= $sumDaysMonth; $i++)
     {
         
         $wDaysWeek = date("w", mktime(0, 0, 0, $numMonth, $i, $numYear));
         $dmDaysWeek = date("d M", mktime(0, 0, 0, $numMonth, $i, $numYear));
 
-        $isWorkDay = isWorkDay($i);
-
-        if (($wDaysWeek == 6 && $wDaysWeek == 0) && $isWorkDay)
+        if (($wDaysWeek == 6 || $wDaysWeek == 0) && $isWorkDay)
         {
             $mondayWork = true;
-        }else
-        {
-            $mondayWork = false;   
         }
 
        if ($wDaysWeek == 1 && $mondayWork)
         {
             echo $dmDaysWeek . "+". PHP_EOL;
+            $mondayWork = false;
            continue;
         }
 
@@ -43,18 +41,12 @@ function calcWorkingDays(int $numYear, int $numMonth): void
         {
             echo $dmDaysWeek . PHP_EOL;    
         }
+
+        $isWorkDay = ($isWorkDay == true) ? $work = false : $work = true;
   
     }   
 
 }
 
-function isWorkDay(int $numDay): bool 
-{
-    return ($numDay % 4) < 2;
-};
-
-
 
 $result = calcWorkingDays(2025, 1);  
-
-
