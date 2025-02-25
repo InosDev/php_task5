@@ -30,6 +30,7 @@ function calcWorkingDays(int $numYear, int $numMonth): void
         {
             echo $dmDaysWeek . "+". PHP_EOL;
             $mondayWork = false;
+            $isWorkDay = false;
            continue;
         }
 
