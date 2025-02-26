@@ -6,14 +6,12 @@ function calcWorkingDays(int $numYear, int $numMonth): void
 {
 
     $sumDaysMonth = cal_days_in_month(CAL_GREGORIAN, $numMonth, $numYear);
-
     $monthName = date("F", mktime(0, 0, 0, $numMonth, 1, $numYear));
 
     echo $monthName . PHP_EOL;
 
     $mondayWork = false;
-
-    $isWorkDay = true;
+    $nonWorkingDays = 2;
 
     for ($i = 1; $i <= $sumDaysMonth; $i++)
     {
@@ -21,7 +19,7 @@ function calcWorkingDays(int $numYear, int $numMonth): void
         $wDaysWeek = date("w", mktime(0, 0, 0, $numMonth, $i, $numYear));
         $dmDaysWeek = date("d M", mktime(0, 0, 0, $numMonth, $i, $numYear));
 
-        if (($wDaysWeek == 6 || $wDaysWeek == 0) && $isWorkDay)
+        if (($wDaysWeek == 6 || $wDaysWeek == 0) && $nonWorkingDays == 2)
         {
             $mondayWork = true;
         }
@@ -30,20 +28,20 @@ function calcWorkingDays(int $numYear, int $numMonth): void
         {
             echo $dmDaysWeek . "+". PHP_EOL;
             $mondayWork = false;
-            $isWorkDay = false;
+            $nonWorkingDays = 0;
            continue;
         }
 
 
-        if ($isWorkDay && ($wDaysWeek <> 6 && $wDaysWeek <> 0))
+        if (($wDaysWeek <> 6 && $wDaysWeek <> 0) && $nonWorkingDays == 2)
         {
-            echo $dmDaysWeek . "+". PHP_EOL;     
+            echo $dmDaysWeek . "+". PHP_EOL;
+            $nonWorkingDays = 0;
         }else
         {
-            echo $dmDaysWeek . PHP_EOL;    
+            echo $dmDaysWeek . PHP_EOL;
+            $nonWorkingDays++;
         }
-
-        $isWorkDay = ($isWorkDay == true) ? $work = false : $work = true;
   
     }   
 
